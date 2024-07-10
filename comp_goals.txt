@@ -1,0 +1,8 @@
+text:
+term = <input> | variable | literal
+expression = term | term + term | ... 
+rel = term < term | ...
+assign = vairable = expression 
+instr = variable = expression | <if> rel <then> instr | <goto> :label | <output> term | :label
+
+  
