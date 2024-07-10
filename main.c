@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "lexer.h"
 #include "parser.h"
+#include "assembler.h"
 
 int main(int argc, char **argv){
     if(argc < 2){
@@ -23,6 +24,17 @@ int main(int argc, char **argv){
     token *last_token = (token*)array_get(&tokens, tokens.count - 2);
     display_token_ptr(last_token);
     */
+    struct parser p;
+    parser_init(&p, tokens);
+    struct program_node program;
+    parse_program(&p, &program);
+
+    test_assembler();
+
+    return 0;
+}
+
+/*
 
     token *tok;
     for (int i = 0; i < tokens.count; i++){
@@ -32,40 +44,34 @@ int main(int argc, char **argv){
     }
     printf("\n");
 
-    struct parser p;
-    parser_init(&p, tokens);
-    struct program_node program;
-    parse_program(&p, &program);
 
-    struct instruction_node *instruct;
-    for(int i = 0; i < program.instructions.count; i++){
-        instruct = (struct instruction_node *)array_get(&program.instructions, i);
-        switch(instruct->type){
-            case INSTR_ASSIGN: {
-                printf("ASSIGN {");
-                printf("Identier: %s", instruct->assign.identifier);
-                printf("}");
-                endl();
-            }
-                break;
-            case INSTR_GOTO:
-                printf("GOTO");
-                endl();
-                break;
-            case INSTR_IF:
-                printf("IF");
-                endl();
-                break;
-            case INSTR_LABEL:
-                printf("LABEL");
-                endl();
-                break;
-            case INSTR_OUTPUT:
-                printf("OUTPUT");
-                endl();
-                break;
+struct instruction_node *instruct;
+for(int i = 0; i < program.instructions.count; i++){
+    instruct = (struct instruction_node *)array_get(&program.instructions, i);
+    switch(instruct->type){
+        case INSTR_ASSIGN: {
+            printf("ASSIGN {");
+            printf("Identier: %s", instruct->assign.identifier);
+            printf("}");
+            endl();
         }
+            break;
+        case INSTR_GOTO:
+            printf("GOTO");
+            endl();
+            break;
+        case INSTR_IF:
+            printf("IF");
+            endl();
+            break;
+        case INSTR_LABEL:
+            printf("LABEL");
+            endl();
+            break;
+        case INSTR_OUTPUT:
+            printf("OUTPUT");
+            endl();
+            break;
     }
-
-    return 0;
 }
+*/

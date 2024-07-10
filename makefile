@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -g
 TARGET = main
-INCLUDES = -I./utils -I./lexer -I./parser # Include both lexer and utils directories
-SRCS = main.c utils/utils.c lexer/lexer.c parser/parser.c # Source files list
+INCLUDES = -I./utils -I./lexer -I./parser -I./assembler # Include both lexer and utils directories
+SRCS = main.c utils/utils.c lexer/lexer.c parser/parser.c assembler/assembler.c # Source files list
 OBJS = $(SRCS:.c=.o)  # Object files list
 
 all: $(TARGET)
