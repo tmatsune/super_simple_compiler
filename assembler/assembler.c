@@ -4,6 +4,7 @@
 #include "assembler.h"
 #include "utils.h"
 #include "parser.h"
+#include "lexer.h"
 
 // ----------------------------- declare variables ------------------------------ //
 
@@ -16,6 +17,7 @@ static void term_declare_variable(struct term_node *term, dynamic_array *variabl
             break;
         }
         case TERM_IDENT: {
+            printf("here\n");
             for(int i = 0; i < variables->count; i++){
                 char *variable = (char *)array_get(variables, i);
                 if (strcmp(term->value, variable) == 0){
@@ -56,14 +58,13 @@ static void instruction_declare_variable(struct instruction_node *instruction, d
         case INSTR_ASSIGN: {   
             // This ensures that all variables used in the expression being assigned are declared
             expression_declare_variable(&instruction->assign.expression, variables);
-            for (unsigned int i = 0; i < variables->count; i++){
-                char *variable = NULL;
-                array_get(variables, i);
+            for (int i = 0; i < variables->count; i++){
+                char *variable = (char *)array_get(variables, i);
                 if (strcmp(instruction->assign.identifier, variable) == 0) {
                     return;
                 }
             }
-            array_append(variables, &instruction->assign.identifier, sizeof(char *));
+            array_append(variables, instruction->assign.identifier, strlen(instruction->assign.identifier));
             break;
         }
         case INSTR_IF: {
@@ -100,6 +101,10 @@ void program_asm(struct program_node *program){
     for(int i = 0; i < program->instructions.count; i++){
         instruction = (struct instruction_node *)array_get(&program->instructions, i);
         instruction_declare_variable(instruction, &variables);
+    }
+    for(int i = 0; i < variables.count; i++){
+        char * v = (char*)array_get(&variables, i);
+        printf("var: %s\n", v);
     }
 
 }

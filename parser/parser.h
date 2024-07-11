@@ -60,7 +60,7 @@ enum instruction_type{
     INSTR_OUTPUT,
     INSTR_LABEL
 } ;
-
+  
 struct assign_node{
     char *identifier;
     struct expression_node expression;

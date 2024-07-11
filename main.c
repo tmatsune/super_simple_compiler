@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "utils.h"
 #include "lexer.h"
 #include "parser.h"
 #include "assembler.h"
+
 
 int main(int argc, char **argv){
     if(argc < 2){
@@ -24,12 +26,17 @@ int main(int argc, char **argv){
     token *last_token = (token*)array_get(&tokens, tokens.count - 2);
     display_token_ptr(last_token);
     */
+    for(int i = 0; i < tokens.count; i++){
+        token *tok = (token*)array_get(&tokens, i);
+        display_token_ptr(tok);
+    }
+
     struct parser p;
     parser_init(&p, tokens);
     struct program_node program;
     parse_program(&p, &program);
 
-    test_assembler();
+    program_asm(&program);
 
     return 0;
 }
