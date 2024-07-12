@@ -112,8 +112,8 @@ static void parse_if(struct parser *p, struct instruction_node *instruct){
     }
     advance_parser(p);
 
-    instruct->if_.intsruct = malloc(sizeof(struct instruction_node));
-    parse_instruction(p, instruct->if_.intsruct);
+    instruct->if_.instruction = malloc(sizeof(struct instruction_node));
+    parse_instruction(p, instruct->if_.instruction);
 }
 
 // Expects a LABEL token and sets up the instruction node with the parsed label 

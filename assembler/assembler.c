@@ -9,21 +9,26 @@
 // ----------------------------- declare variables ------------------------------ //
 
 static void term_declare_variable(struct term_node *term, dynamic_array *variables){
+
     switch(term->type){
         case TERM_INPUT: {
+            //printf("INPUT\n");
             break;
         }
         case TERM_INT: {
+            //printf("INT\n");
             break;
         }
         case TERM_IDENT: {
-            printf("here\n");
+            //printf("IDENTIFY\n");
             for(int i = 0; i < variables->count; i++){
                 char *variable = (char *)array_get(variables, i);
                 if (strcmp(term->value, variable) == 0){
                     return;
                 }
             }
+            printf("Error, term is not defines %s\n", term->value);
+            exit(EXIT_FAILURE);
             break;
         }
     }
@@ -68,7 +73,8 @@ static void instruction_declare_variable(struct instruction_node *instruction, d
             break;
         }
         case INSTR_IF: {
-
+            relation_declare_variable(&instruction->if_.relation, variables);
+            instruction_declare_variable(instruction->if_.instruction, variables);
             break;
         }
         case INSTR_GOTO: {
@@ -76,7 +82,7 @@ static void instruction_declare_variable(struct instruction_node *instruction, d
             break;
         }
         case INSTR_OUTPUT: {
-
+            term_declare_variable(&instruction->output.term, variables);
             break;
         }
         case INSTR_LABEL: {

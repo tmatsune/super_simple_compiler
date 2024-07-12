@@ -68,7 +68,7 @@ struct assign_node{
 
 struct if_node {
     struct relation_node relation;
-    struct instruct_node *intsruct; // needs to be ptr since it is defined before the intruction node
+    struct instruct_node *instruction; // needs to be ptr since it is defined before the intruction node
 };
 
 struct goto_node {
