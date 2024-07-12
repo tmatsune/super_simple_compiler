@@ -6,6 +6,18 @@
 #include "parser.h"
 #include "lexer.h"
 
+// ------------------------------ assembly code --------------------------------//
+
+static int find_variable(dynamic_array *variables, char *identifier){
+    for(int i = 0; i < variables->count; i++){
+        char *var = (char *)array_get(variables, i);
+        if(strcmp(var, identifier) == 0){
+            return i;
+        }
+    }
+    return -1;
+}
+
 // ----------------------------- declare variables ------------------------------ //
 
 static void term_declare_variable(struct term_node *term, dynamic_array *variables){
@@ -96,7 +108,8 @@ static void instruction_declare_variable(struct instruction_node *instruction, d
     }
 }
 
-// ------------------------------ main assemblerfuncion ------------------------------ //
+
+// ------------------------------ main assembler funcion ------------------------------ //
 
 void program_asm(struct program_node *program){
 
@@ -107,10 +120,6 @@ void program_asm(struct program_node *program){
     for(int i = 0; i < program->instructions.count; i++){
         instruction = (struct instruction_node *)array_get(&program->instructions, i);
         instruction_declare_variable(instruction, &variables);
-    }
-    for(int i = 0; i < variables.count; i++){
-        char * v = (char*)array_get(&variables, i);
-        printf("var: %s\n", v);
     }
 
 }
